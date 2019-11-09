@@ -26,7 +26,15 @@ public final class App {
             new Thread(new Runnable(){
                 @Override
                 public void run() {
-                    s.putOnSale(rnd.nextInt(4) + 1, rnd.nextInt(4) + 1);
+                    while(true) {
+                        try {
+                            Thread.sleep(1000);
+                            s.putOnSale(rnd.nextInt(2) + 1, rnd.nextInt(4) + 1);
+                        }
+                        catch(InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
                 }
             }).start();
         }
@@ -35,7 +43,15 @@ public final class App {
             new Thread(new Runnable(){
                 @Override
                 public void run() {
-                    b.addDemand(rnd.nextInt(4) + 1, rnd.nextInt(4) + 1);
+                    while(true) {
+                        try {
+                            Thread.sleep(1000);
+                            b.addDemand(rnd.nextInt(2) + 1, rnd.nextInt(4) + 1);
+                        }
+                        catch(InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
                 }
             }).start();
         }

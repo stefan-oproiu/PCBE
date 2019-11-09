@@ -13,7 +13,7 @@ public class Buyer {
     }
 
     public void addDemand(double price, int count) {
-        Demand demand = new Demand(price, count);
+        Demand demand = new Demand(price, count, this);
         this.market.addDemand(demand);
     }
 

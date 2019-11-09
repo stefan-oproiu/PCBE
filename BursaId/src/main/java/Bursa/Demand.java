@@ -4,11 +4,13 @@ public class Demand {
 
     private double price;
     private int count;
+    private Buyer owner;
     private volatile boolean inTransaction = false;
 
-    public Demand(double price, int count) {
+    public Demand(double price, int count, Buyer owner) {
         this.price = price;
         this.count = count;
+        this.owner = owner;
     }
 
     public double getPrice() {
@@ -32,6 +34,7 @@ public class Demand {
             throw new IllegalArgumentException();
         }
         this.count -= count;
+        this.owner.onDemandConsumed(count);
     }
 
 }

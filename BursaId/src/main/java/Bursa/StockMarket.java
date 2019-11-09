@@ -14,20 +14,19 @@ public class StockMarket {
         this.demands = new HashMap<>();
     }
 
-    public void addSupply(Supply supply) {
+    public synchronized void addSupply(Supply supply) {
         List<Supply> newState = new ArrayList<Supply>(this.supplies);
         newState.add(supply);
         this.supplies = newState;
-        System.out.println(this.supplies.size());
     }
 
-    public void removeSupply(Supply supply) {
+    public synchronized void removeSupply(Supply supply) {
         ArrayList<Supply> newState = new ArrayList<Supply>(this.supplies);
         newState.remove(supply);
         this.supplies = newState;
     }
 
-    public void addDemand(Demand demand) {
+    public synchronized void addDemand(Demand demand) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -48,8 +47,12 @@ public class StockMarket {
         this.demands.put(demand, thread);
     }
 
-    public void removeDemand(Demand demand) {
+    public synchronized void removeDemand(Demand demand) {
         Thread thread = this.demands.get(demand);
+        if(thread == null) {
+            return;
+        }
+
         thread.interrupt();
         this.demands.remove(demand);
     }
